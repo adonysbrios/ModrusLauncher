@@ -1,0 +1,27 @@
+name: .NET 8.0 Build
+
+on:
+  push:
+    branches:
+      - main  # Reemplaza con tu rama principal
+  pull_request:
+    branches:
+      - main  # Reemplaza con tu rama principal
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0  # Cambia a la versión .NET que necesites, en tu caso 8.0
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release
