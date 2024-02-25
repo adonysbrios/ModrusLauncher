@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>icon_32x32.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\bg.png" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\mc.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon_32x32.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CmlLib.Core" Version="3.3.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\bg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\mc.png" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,45 @@
+﻿<Window x:Class="ModrusLauncher.VersionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModrusLauncher"
+        mc:Ignorable="d"
+        Title="Select version" Height="310" Width="227"
+        Background="#F22E2E2E" WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Canvas>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Play Minecraft: Java Edition" VerticalAlignment="Top" Foreground="White" FontFamily="Bahnschrift" FontSize="10" Canvas.Left="10" Canvas.Top="16"/>
+                <Button HorizontalAlignment="Left" Canvas.Left="193" Canvas.Top="15" VerticalAlignment="Top" Background="#FF2E2E2E" BorderBrush="#FF2E2E2E" Click="Button_Click_1">
+                    <Image Source="/Images/close.png" Stretch="Fill"/>
+                </Button>
+            </Canvas>
+        </Grid>
+        <ListView Name="ListVersion" Grid.Row="1" Background="#F22E2E2E" BorderBrush="#FF2E2E2E">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="Images/mc.png" Height="20" Width="20"/>
+                        <TextBlock Text="{Binding}" Margin="5" FontFamily="Bahnschrift" Foreground="#fff" Grid.Column="1"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Border Grid.Row="2" Margin="5" BorderBrush="#fff" BorderThickness="1" CornerRadius="3">
+            <Button Background="#00DDDDDD" Foreground="White" BorderBrush="#00707070" Click="Button_Click">
+                Select version
+            </Button>
+        </Border>
+    </Grid>
+</Window>

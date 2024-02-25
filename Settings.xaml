@@ -1,0 +1,99 @@
+﻿<Window x:Class="ModrusLauncher.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModrusLauncher"
+        mc:Ignorable="d"
+        Title="Settings" Height="496" Width="381"
+        Background="#E22E2E2E" WindowStyle="None" ResizeMode="NoResize">
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"/>
+            
+        </Grid.RowDefinitions>
+        <Canvas>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Foreground="White" FontFamily="Bahnschrift" FontSize="10" Canvas.Left="10" Canvas.Top="16"/>
+            <Button HorizontalAlignment="Left" Canvas.Right="20" Canvas.Top="15" VerticalAlignment="Top" Background="#FF2E2E2E" BorderBrush="#FF2E2E2E" Click="Button_Click_1" RenderTransformOrigin="1.175,0.649">
+                <Image Source="/Images/close.png" Stretch="Fill"/>
+            </Button>
+        </Canvas>
+        
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="20">
+                <TextBlock Foreground="White" FontFamily="Bahnschrift">Java Path</TextBlock>
+                <TextBox Foreground="White" Name="JPath" Margin="0,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+            </StackPanel>
+            
+            <Grid Margin="20" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock Foreground="White" FontFamily="Bahnschrift">Server host</TextBlock>
+                    <TextBox Foreground="White" Name="Shost" Margin="0,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Foreground="White" FontFamily="Bahnschrift">Server port</TextBlock>
+                    <TextBox Foreground="White" Name="Sport" Margin="5,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+                </StackPanel>                
+            </Grid>
+
+            <Grid Margin="20" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock Foreground="White" FontFamily="Bahnschrift">Screen width</TextBlock>
+                    <TextBox Foreground="White" Name="SWidth" Margin="0,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Foreground="White" FontFamily="Bahnschrift">Screen height</TextBlock>
+                    <TextBox Foreground="White" Name="SHeight" Margin="5,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+                </StackPanel>
+            </Grid>
+            <Grid Margin="20" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock Foreground="White" FontFamily="Bahnschrift">Max. RAM usage (GB)</TextBlock>
+                    <TextBox Foreground="White" Name="MaxRam" Margin="0,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Foreground="White" FontFamily="Bahnschrift">Username</TextBlock>
+                    <TextBox  Foreground="White" Name="Username" Margin="5,7,0,0" Height="30" Padding="5,5,9,5" Background="#FF2E2E2E" BorderBrush="#192E2E2E"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+
+
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="5" BorderBrush="#D65D00" Background="#D65D00" Foreground="White" FontFamily="Bahnschrift" Click="Button_Click_2" >Change settings</Button>
+            <Button Margin="5" Grid.Column="1" Background="#00DDDDDD" BorderBrush="White" Foreground="White" FontFamily="Bahnschrift" Click="Button_Click">Reset settings</Button>
+        </Grid>
+        
+    </Grid>
+</Window>
