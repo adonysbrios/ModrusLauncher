@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
+using CmlLib.Core.Installer.FabricMC;
+using CmlLib.Core.Installer.LiteLoader;
 using CmlLib.Core.Version;
 using CmlLib.Core.VersionLoader;
 
@@ -41,6 +43,12 @@ namespace ModrusLauncher
             try
             {
                 versions = await launcher.GetAllVersionsAsync();
+                var fabricVersionLoader = new FabricVersionLoader();
+                var liteLoaderVersionLoader = new LiteLoaderVersionLoader();
+                var fabricVersions = await fabricVersionLoader.GetVersionMetadatasAsync();
+                var liteVersions = await fabricVersionLoader.GetVersionMetadatasAsync();
+                versions.Merge(liteVersions);
+                versions.Merge(fabricVersions);
             }
             catch (System.Net.WebException)
             {

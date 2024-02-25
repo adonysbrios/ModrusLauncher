@@ -15,6 +15,8 @@ using CmlLib.Core.Version;
 using System.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics;
+using CmlLib.Core.Installer.Forge;
+using System.Windows.Markup;
 
 namespace ModrusLauncher
 {
@@ -33,6 +35,7 @@ namespace ModrusLauncher
         public int ScreenHeight;
         public string NewJavaPath_;
         public string percentage;
+        public bool ForgeVersion;
 
         public void resetOpts()
         {
@@ -55,7 +58,8 @@ namespace ModrusLauncher
                 ScreenHeight,
                 serverPort_,
                 MaxRamUsage,
-                version_
+                version_,
+                ForgeVersion
             };
             string config = "config.txt";
 
@@ -98,6 +102,7 @@ namespace ModrusLauncher
                     int.TryParse(lineas[6], out MaxRamUsage);
                     version_ = lineas[7];
                     VersionText.Text = version_;
+                    bool.TryParse(lineas[8],out ForgeVersion);
                 }
             }
             else
@@ -107,10 +112,19 @@ namespace ModrusLauncher
 
         }
 
-        public void UpdateVersion(string data)
+        public void UpdateVersion(string data, bool forge=false)
         {
             version_=data;
-            VersionText.Text = version_;
+            if (forge)
+            {
+                VersionText.Text = version_+"(Forge Install)";
+                ForgeVersion = true;
+            }
+            else
+            {
+                VersionText.Text = version_;
+                ForgeVersion = false;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -120,7 +134,7 @@ namespace ModrusLauncher
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            VersionsWindow vw = new VersionsWindow(this);
+            SelectType vw = new SelectType(this);
             vw.Show();        
         }
         private void WaitClick(object sender, RoutedEventArgs e)
@@ -130,17 +144,104 @@ namespace ModrusLauncher
 
         public async Task RunMinecraft()
         {
+
+
+            var path = new MinecraftPath();
+            var launcher = new CMLauncher(path);
             if (version_==null)
             {
                 MessageBox.Show("Select a version before play");
                 return;
             }
 
+            if(ForgeVersion)
+            {
+                PlayButton.Content = "Wait...";
+                PlayButton.Click += WaitClick;
+
+                launcher.FileChanged += (e) =>
+                {
+                    DownloadBarGrid.Visibility = Visibility.Visible;
+                    ProgressDownload.Text = "[" + e.FileKind.ToString() + "]" + e.FileName + " " + e.ProgressedFileCount + "/" + e.TotalFileCount;
+                    DownloadBar.Minimum = 0;
+                    DownloadBar.Maximum = e.TotalFileCount;
+                    DownloadBar.Value = e.ProgressedFileCount;
+                };
+                launcher.ProgressChanged += (s, e) =>
+                {
+                    percentage = e.ProgressPercentage.ToString();
+                };
+
+                //Initialize MForge
+                var forge = new MForge(launcher);
+                forge.FileChanged += (e) =>
+                {
+                    DownloadBarGrid.Visibility = Visibility.Visible;
+                    ProgressDownload.Text = "[" + e.FileKind.ToString() + "]" + e.FileName + " " + e.ProgressedFileCount + "/" + e.TotalFileCount;
+                    DownloadBar.Minimum = 0;
+                    DownloadBar.Maximum = e.TotalFileCount;
+                    DownloadBar.Value = e.ProgressedFileCount;
+                };
+                forge.ProgressChanged += (s, e) =>
+                {
+                    percentage = e.ProgressPercentage.ToString();
+                };
+                forge.InstallerOutput += (s, e) => Console.WriteLine(e);
+                var versionName = await forge.Install("1.20.1");
+
+                version_ = versionName;
+                VersionText.Text = version_;
+
+                Process process = await launcher.CreateProcessAsync(versionName, new MLaunchOption
+                {
+                    Session = MSession.CreateOfflineSession(username_),
+                    JavaPath = NewJavaPath_,
+                    ScreenWidth = ScreenWidth,
+                    ScreenHeight = ScreenHeight,
+                    ServerIp = serverIp_,
+                    ServerPort = serverPort_,
+                    MaximumRamMb = MaxRamUsage,
+
+                });
+                process.EnableRaisingEvents = true;
+                process.Exited += (sender, e) =>
+                {
+                    if (process.ExitCode != 0)
+                    {
+                        MessageBox.Show("An error has occurred while launching the game, please make sure you have all the files downloaded before launching it in offline mode");
+
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            //MainWindow mainWindow = new MainWindow(); // Debes asegurarte de tener la instancia correcta de tu ventana principal
+                            this.Show();
+                        });
+
+                    }
+                    else if (process.ExitCode == 0) { }
+                    {
+
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            //MainWindow mainWindow = new MainWindow(); // Debes asegurarte de tener la instancia correcta de tu ventana principal
+                            this.Show();
+                        });
+
+                    }
+                };
+                process.Start();
+                PlayButton.Content = "Play";
+                PlayButton.Click += Button_Click_2;
+                saveOpts();
+                this.Hide();
+
+
+
+
+
+            }
+
             PlayButton.Content = "Wait...";
             PlayButton.Click += WaitClick;
-
-            var path = new MinecraftPath();
-            var launcher = new CMLauncher(path);
             MVersionCollection versions;
             launcher.FileChanged += (e) =>
             {

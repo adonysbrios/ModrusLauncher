@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="CmlLib.Core" Version="3.3.9" />
+    <PackageReference Include="CmlLib.Core.Installer.Forge" Version="0.0.2" />
   </ItemGroup>
 
   <ItemGroup>
